@@ -1,0 +1,43 @@
+.d-flex .btn{
+    background: #06038d;
+    border: 2px solid #06038d;
+    border-radius: 8px;
+    color: #fff;
+}
+.d-flex .btn:hover{
+    background: #1714ac;
+    border: 2px solid #1714ac;
+}
+
+/*style="background-color: #06038d; border-color: #06038d;"*/
+
+
+.row .right2 {
+    margin-left: -10px;
+    height: 180px;
+    width: 180px;
+    border-radius: 10px;
+}
+
+.container .row .col .row .col a {
+    background-color: #ff671f; /* background-color: #ff671f; */
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+
+}
+
+.container .row .col .row .col a :hover {
+    background-color: rgb(201, 132, 5);
+}
+#column :hover{
+    transform: scale(0.9);
+    transition: 450ms;
+    border-radius: 10px;
+}
+
+#items :hover {
+    color: #309061;
+    transition: 200ms;
+}

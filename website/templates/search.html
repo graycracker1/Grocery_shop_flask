@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %} Search {% endblock %}
+
+
+{% block body %}
+<style>
+    .form1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+</style>
+
+{% if items | length < 1 %}
+<h3 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: 10px;">No Items Match your Search query</h3>
+
+{% else %}
+
+<h3 class=" container text-center mb-5" style="color: rgb(0, 0, 0); margin-top: 10px;">Searched Results</h3>
+
+
+<!-- Sorting options -->
+
+<div class="container text-center form1" style="  margin-top: -20px;  margin-bottom: 20px; ">
+    <div class="row " style="  padding: -10px; width: 470px; height: 50px; background-color: rgb(250, 219, 181); border-radius: 10px;" >
+        <div class="row form1" style="margin-right: -40px; box-sizing:content-box;">
+            <div class="col " >
+                
+                <a style="background-color: #ff671f; /* background-color: #ff671f; */
+                padding: 5px;
+                border-radius: 10px;
+                text-decoration: none;
+                color: white;" href="{{ url_for('views.search', sort='price_low_high') }}">Price (Low to High)</a>
+                
+                <a style="background-color: #ff671f; /* background-color: #ff671f; */
+                padding: 5px;
+                border-radius: 10px;
+                text-decoration: none;
+                color: white;" href="{{ url_for('views.search', sort='price_high_low') }}">Price (High to Low)</a>
+                 
+                <a style="background-color: #ff671f; /* background-color: #ff671f; */
+                padding: 5px;
+                border-radius: 10px;
+                text-decoration: none;
+                color: white;" href="{{ url_for('views.search', sort='name') }}">Name</a>
+                
+                <a style="background-color: #ff671f; /* background-color: #ff671f; */
+                padding: 5px;
+                border-radius: 10px;
+                text-decoration: none;
+                color: white;" href="{{ url_for('views.search', sort='availability') }}">Availability</a>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center" style="width: 1130px;">
+    <div class="row col-md-10" style="width: 1096px; margin: 8px;  background-color: #309061; border-radius: 10px;" id="column">
+
+        {% for item in items %}
+
+        <div class="col" style=" height: 330px; width: 200px; max-width: 209px; background-color:rgb(250, 219, 181); margin: 5px; border-radius: 10px;">
+
+            <img src="{{ item.product_picture }}" alt="" style="height: 180px; width: 180px; object-fit:contain;">
+
+            <div class="row" style="margin-top: 5px;">
+                <h6 style="color: gray;">{{ item.product_name }}</h6>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+
+                <div class="col" style="padding: 5px;">
+                    
+                    <h5  style="font-weight: 600; font-family: 'Times New Roman', Times, serif; margin-left: -11px; margin-right: -25px;">₹ {{ item.current_price }} {{ item.small_unit_of_measurement }}</h5>
+                    <strike><p style="color: gray; margin-left: -10px; margin-right: -20px;">₹ {{ item.previous_price}} {{ item.small_unit_of_measurement }}</p></strike>
+                    
+                </div>
+                
+                <div class="col text-center" style="margin-top: 10px; padding-top: 10px;">
+                    
+                    {% if item.in_stock > 0 %}
+                        <a href="/add-to-cart/{{ item.id }}" style="background-color: #ff671f; margin-left: -25px; margin-right: -30px;">Add to cart</a>
+                        
+                    {% else %}
+                        <p style="background-color: red; color: white; width: 104px; height: 42px; padding-top: 10px; border-radius: 10px; margin-top: -10px; margin-right: -7px;">Out of Stock</p>
+                    {% endif %}
+                </div>
+
+            </div>
+
+           
+
+            <div class="row" style="margin-top: -5px;">
+                {% if item.in_stock == 1 %}
+                    <p>{{ item.in_stock }} {{ item.small_unit_of_measurement }} Left</p>
+
+                {% elif item.in_stock > 0 %}
+                    <p>{{ item.in_stock }} {{ item.unit_of_measurement }} Left</p>
+                    
+                {% else %}
+                    <p style="color: red;">Come back later</p> 
+                {% endif %}
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+
+{% endif %}
+
+
+{% endblock %}

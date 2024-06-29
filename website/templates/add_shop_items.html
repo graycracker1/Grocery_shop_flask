@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Shop Items {% endblock %}
+
+
+{% block body %}
+
+<style>
+    .td{
+        width: 120px;
+    }
+</style>
+<div class="my-5">
+
+
+
+<h1 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: -30px;"> Add shop Items</h1>
+
+<table class="table table-dark table-hover" style="margin-top: -30px;">
+    <thead>
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Previous Price</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">In Stock</th>
+
+            <th scope="col">Unit</th> <!-- unit -->
+            <th scope="col">Small Unit</th> <!-- small-->
+            <th scope="col">Picture</th>
+            <th scope="col">Flash Sale</th>
+            <th scope="col">Add</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <form action="" method="POST", enctype="multipart/form-data" id="addShopItemForm">
+                {{ form.hidden_tag() }}
+
+                <td>{{ form.product_name }}</td>
+                <td>{{ form.previous_price (class="td")}}</td>
+                <td>{{ form.current_price (class="td")}}</td>
+                <td>{{ form.in_stock (class="td")}}</td>
+
+                <td>{{ form.unit_of_measurement }}</td> <!-- unit -->
+                <td><input type="text" id="small_unit_of_measurement" name="small_unit_of_measurement" class="td" readonly></td> <!-- small-->
+
+                <td>{{ form.product_picture() }}</td>
+                <td>{{ form.flash_sale }}</td>
+                <td>{{ form.add_product() }}</td>
+            </form>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<script>
+    // Get references to the unit of measurement and small unit of measurement fields
+    var unitField = document.getElementById("unit_of_measurement");
+    var smallUnitField = document.getElementById("small_unit_of_measurement");
+
+    // Define a function to update the small unit of measurement field based on the selected unit
+    function updateSmallUnit() {
+        var selectedUnit = unitField.value;
+        var smallUnit = "";
+        // Set the small unit based on the selected unit
+        switch (selectedUnit) {
+            case "pieces":
+                smallUnit = "Pcs";
+                break;
+            case "kilos":
+                smallUnit = "Kg";
+                break;
+            case "liters":
+                smallUnit = "L";
+                break;
+            default:
+                smallUnit = "";
+                break;
+        }
+        // Update the small unit field value
+        smallUnitField.value = smallUnit;
+    }
+
+    // Add an event listener to the unit of measurement field to trigger the update
+    unitField.addEventListener("change", updateSmallUnit);
+
+    // Call the update function initially to set the initial value
+    updateSmallUnit();
+</script>
+
+{% endblock %}

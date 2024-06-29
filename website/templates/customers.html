@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Customers {% endblock %}
+
+{% block body %}
+
+<div class="my-5">
+
+    <h1 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: -40px;">Registered Users</h1>
+
+<table class="table table-dark table-hover" style="margin-top: -30px;">
+    <thead>
+        <tr>
+            <th scope="col">Customer ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Date Joined</th>
+
+        </tr>
+
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.username }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{customer.address}}</td>
+        <td>{{ customer.date_joined }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}

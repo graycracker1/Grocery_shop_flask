@@ -1,0 +1,7 @@
+Flask
+Gunicorn
+Flask-SQLAlchemy
+Flask-Login
+intasend-python
+Flask-WTF
+email-validator

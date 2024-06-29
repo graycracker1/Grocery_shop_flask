@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} Feedback {% endblock %}
+
+{% block body %}
+
+<style>
+
+.form1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.feedback_label{
+    font-size: larger;
+    font-weight:500;
+}
+
+.feedback_entry{
+    margin-top: 5px;
+    height: 150px;
+}
+.form {
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+
+<h2 class="text-center" style="padding-top: 15px;">Customer Feedback Form</h2>
+<hr style="border-top: 5px dotted; width: 36%; margin: auto;">
+
+<div class="container my-5 form1">
+    <div class="row" style="margin-top: -25px;">
+        <div class="col-md-6" >
+        
+            <div class="form " style="width: 550px; max-width: 900px; background-color: rgb(250, 219, 181);">
+            <form method="POST" action="/contact/customer">
+                {{ customer_form.hidden_tag() }}
+                <div class="form-group text-center" style="margin-top: 30px;">
+                    <h3 style="color: rgb(0, 0, 0);">Welcome <span class="text-capitalize">{{ current_user.username }}</span></h3>
+                </div>
+                <div class="form-group">
+                    {{ customer_form.feedback.label (class="feedback_label")}} {{ customer_form.feedback(class="form-control feedback_entry", placeholder= "Type your message here...") }}
+                </div>
+                <button type="submit" class="btn btn-primary" style="background-color: #06038d; border-color: #06038d; margin-top: 10px;">Submit</button>
+            </form>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}

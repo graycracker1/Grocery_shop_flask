@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %} Cart {% endblock %}
+
+{% block body %}
+<style>
+    #notification-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #06038d;;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#notification-content {
+    text-align: center;
+}
+
+
+</style>
+
+<div class="container my-5">
+    <div class="row">
+        {% if cart %}
+        <h1 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: -25px;">Shopping Cart</h1>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body" style="background-color: rgb(250, 219, 181);">
+                    {% for item in cart %}
+                    <div class="row cart-item">
+                        <div class="col-sm-3 text-center align-self-center">
+                            <img src="{{ item.product.product_picture }}" alt="" class="img-fluid " height="150px"
+                                width="150px" style="background-color: rgb(250, 219, 181);">
+                        </div>
+                        <div class="col-sm-9">
+                            <div>
+                                <h3>{{ item.product.product_name }}</h3>
+                                <div class="my-3">
+                                    <label for="quantity">Quantity</label>
+                                    <a class="minus-cart btn" pid="{{item.id}}"><i
+                                            class="fas fa-minus-square fa-lg"></i></a>
+                                    <span id="quantity">{{ item.quantity }}</span>
+                                    <a class="plus-cart btn " pid="{{ item.id }}"><i
+                                            class="fas fa-plus-square fa-lg"></i></a>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-0"><span><strong>₹ {{ item.product.current_price }} - {{ item.product.small_unit_of_measurement }}</strong></span></p>
+                                    
+                                    <div class="row">
+                                        {% if item.product.in_stock == 1 %}
+                                        <p>{{ item.product.in_stock }} {{ item.product.small_unit_of_measurement }} Left</p>
+                                        {% elif item.product.in_stock > 0 %}
+                                        <p>{{ item.product.in_stock }} {{ item.product.unit_of_measurement }} Left</p>
+                                        {% else %}
+                                        <p style="color: red;">Come back later</p>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <button class="remove-cart btn btn-sm btn-secondary mr-3" pid="{{ item.id }}"
+                                        style="background-color: #ff671f; border-color: #ff671f;">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="background-color: rgb(250, 219, 181);">
+                <div class="card-body">
+                    <h3>Cart Summary </h3>
+                    <hr color="black">
+                    <ul class="list-group">
+                        {% for item in cart %}
+                        <li style="background-color: rgb(250, 219, 181);"
+                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                            <strong>{{item.product.product_name}}</strong><span
+                                id="amount">{{item.product.current_price}} X <span
+                                    id="quantity{{item.id}}">{{ item.quantity}}</span></span></li>
+                        {% endfor %}
+                        <li style="background-color: rgb(250, 219, 181);"
+                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                            Amout <span>₹ <span id="amount_tt">{{ amount }}</span></span></li>
+                        <li style="background-color: rgb(250, 219, 181);"
+                            class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                            <div style="margin-top: 15px;">
+                                <strong>Total</strong><small>(Including Shipping)</small>
+                            </div>
+                            <span><strong>₹ </strong><span id="totalamount"><strong>{{ total }}</strong></span></span>
+                        </li>
+                    </ul>
+                    <div class="d-grid"><a href="/place-order" class="btn btn-primary"
+                            style="background-color: #06038d;">Place Order</a></div>
+                </div>
+            </div>
+        </div>
+
+        <form id="remove-cart-form" action="/remove-from-cart" method="post" style="display: none;">
+            <input type="hidden" id="cart-item-id" name="cart_id">
+        </form>
+
+        <script>
+            var removeButtons = document.querySelectorAll('.remove-cart');
+
+            removeButtons.forEach(function(button) {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var cartId = button.getAttribute('pid');
+                    document.getElementById('cart-item-id').value = cartId;
+                    document.getElementById('remove-cart-form').submit();
+                });
+            });
+        </script>
+
+        {% else %}
+        <h1 class="text-center mb-5" style="color: rgb(0, 0, 0);">Your Cart is Empty</h1>
+        {% endif %}
+    </div>
+</div>
+
+<!-- box -->
+<div class="text-center" id="notification-box">
+    <div id="notification-content">
+        <p>Quantity cannot be less than 1</p>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %} Shop Items {% endblock %}
+
+
+{% block body %}
+
+<style>
+    th, td {
+  
+  border-left: solid 1px grey;
+}
+</style>
+<div class="my-5">
+
+    <h1 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: -40px;"> contact us entry</h1>
+
+
+
+<table class="table table-dark table-hover" style="margin-top: -30px;">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Description</th>
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in items %}
+            
+
+        <tr>
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.product }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.unit }}</td>
+            <td>{{ item.description }}</td>
+            
+            
+
+        </tr>
+
+            
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+{% endblock %}

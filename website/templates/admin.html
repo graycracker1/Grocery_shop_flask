@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Admin Page {% endblock %}
+
+{% block body %}
+
+<div class="my-5">
+
+    <h1 class="text-center mb-5" style="color: rgb(0, 0, 0); margin-top: -40px;"> Admin page</h1>
+
+<table class="table table-dark table-hover" style="margin-top: -30px;">
+    <thead>
+        <tr>
+            <th scope="col">Registered Customers</th>
+            <th scope="col">Shop Items</th>
+            <th scope="col">Add Shop Items</th>
+            <th scope="col">View Orders</th>
+            <th scope="col">Customer Feedback</th>
+            <th scope="col">Contact us</th>
+
+        </tr>
+
+    </thead> 
+    <tbody>
+        <tr>
+        <td><a href="/customers">Registered Customers</a></td>
+        <td><a href="/shop-items">Shop Items</a></td>
+        <td><a href="/add-shop-items">Add Shop Items</a></td>
+        <td><a href="/view-orders">View Orders</a></td>
+        <td><a href="/feedback-entry">Customer Feedback</a></td>
+        <td><a href="/contact-us-entry">Contact Us Entry</a></td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}

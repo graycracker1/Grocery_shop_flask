@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %} WishList {% endblock %}
+
+{% block body %}
+<div class="container text-center" style="margin-top: 20px;">
+    {% if wishlist %}
+    <h1 class="text-center mb-5" style="color: rgb(0, 0, 0);">Your WishList</h1>
+    <div class="row" style="margin: 8px; margin-top: 30px; background-color: #309061; border-radius: 10px;" id="column">
+
+        {% for item in wishlist %}
+
+        <div class="col" style=" height: 380px; width: 200px; max-width: 209px; background-color:rgb(250, 219, 181); margin: 5px; border-radius: 10px; position: relative;">
+            <img src="{{ item.product.product_picture }}" alt="" style="height: 180px; width: 180px; object-fit:contain;">
+
+            <div class="row" style="margin-top: 5px;">
+                <h6 style="color: gray;">{{ item.product.product_name }}</h6>
+            </div>
+
+            <div class="row" style="margin-top: 10px;">
+
+                <div class="col" style="padding: 5px;">
+                    <h5 style="font-weight: 600; font-family: 'Times New Roman', Times, serif; margin-left: -11px; margin-right: -25px;">₹ {{ item.product.current_price }} {{ item.product.small_unit_of_measurement }}</h5>
+                    <strike><p style="color: gray; margin-left: -10px; margin-right: -20px;">₹ {{ item.product.previous_price}} {{ item.product.small_unit_of_measurement }}</p></strike>
+                </div>
+
+                <div class="col text-center" style="margin-top: 10px; padding-top: 10px;">
+                    {% if item.product.in_stock > 0 %}
+                    <a href="/add-to-cart/{{ item.id }}" style="background-color: #ff671f; margin-left: -25px; margin-right: -30px;">Add</a>
+                    {% else %}
+                    <p style="background-color: red; color: white; width: 104px; height: 42px; padding-top: 10px; border-radius: 10px; margin-top: -10px; margin-right: -10px;">Out of Stock</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: -5px;">
+                {% if item.product.in_stock == 1 %}
+                <p>{{ item.product.in_stock }} {{ item.product.small_unit_of_measurement }} Left</p>
+                {% elif item.product.in_stock > 0 %}
+                <p>{{ item.product.in_stock }} {{ item.product.unit_of_measurement }} Left</p>
+                {% else %}
+                <p style="color: red;">Come back later</p>
+                {% endif %}
+            </div>
+            <!-- Add a button to remove the item from the wishlist -->
+            <a href="#" class="btn btn-danger remove-wishlist-item" data-item-id="{{ item.id }}">Remove</a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <h1 class="text-center mb-5" style="color: rgb(0, 0, 0);">Your WishList is Emptys</h1>
+    {% endif %}
+</div>
+
+<!-- Add a hidden form with the appropriate action and method -->
+<form id="remove-wishlist-form" action="/remove-from-wishlist" method="post" style="display: none;">
+    <!-- Include a hidden input field to store the item ID -->
+    <input type="hidden" id="wishlist-item-id" name="item_id">
+</form>
+
+<!-- Include JavaScript to handle the link click and submit the form -->
+<script>
+    // Get reference to the remove button
+    var removeButtons = document.querySelectorAll('.remove-wishlist-item');
+
+    // Add event listener to each remove button
+    removeButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default action of clicking a link
+
+            // Get the item ID from the data attribute
+            var itemId = button.getAttribute('data-item-id');
+
+            // Set the item ID in the hidden input field of the form
+            document.getElementById('wishlist-item-id').value = itemId;
+
+            // Submit the form
+            document.getElementById('remove-wishlist-form').submit();
+        });
+    });
+</script>
+{% endblock %}
