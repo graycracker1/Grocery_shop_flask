@@ -1,4 +1,4 @@
-﻿# Grocery_shop_flask
+﻿# Grocery shop
 # See it live here: https://shop-bef0.onrender.com
 # 1. Homepage
 ![Homepage](./images/homepage.png)
